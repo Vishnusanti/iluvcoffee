@@ -12,6 +12,8 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const coffees_module_1 = require("./coffees/coffees.module");
 const typeorm_1 = require("@nestjs/typeorm");
+const coffee_rating_module_1 = require("./coffee-rating/coffee-rating.module");
+const database_module_1 = require("./database/database.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,7 +28,7 @@ AppModule = __decorate([
                 database: 'postgres',
                 autoLoadEntities: true,
                 synchronize: true,
-            })],
+            }), coffee_rating_module_1.CoffeeRatingModule, database_module_1.DatabaseModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

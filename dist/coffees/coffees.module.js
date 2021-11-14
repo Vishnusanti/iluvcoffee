@@ -10,6 +10,8 @@ exports.CoffeesModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const event_entity_1 = require("../events/entities/event.entity");
+const typeorm_2 = require("typeorm");
+const coffees_constants_1 = require("./coffees.constants");
 const coffees_controller_1 = require("./coffees.controller");
 const coffees_service_1 = require("./coffees.service");
 const coffee_entity_1 = require("./entities/coffee.entity");
@@ -20,7 +22,19 @@ CoffeesModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([coffee_entity_1.Coffee, flavor_entity_1.Flavor, event_entity_1.Event])],
         controllers: [coffees_controller_1.CoffeesController],
-        providers: [coffees_service_1.CoffeesService]
+        providers: [
+            coffees_service_1.CoffeesService,
+            {
+                provide: coffees_constants_1.COFFEE_BRANDS,
+                useFactory: async (connection) => {
+                    const coffeeBrands = await Promise.resolve(['buddy brew', 'nescafe']);
+                    console.log('async factory');
+                    return coffeeBrands;
+                },
+                inject: [typeorm_2.Connection]
+            }
+        ],
+        exports: [coffees_service_1.CoffeesService],
     })
 ], CoffeesModule);
 exports.CoffeesModule = CoffeesModule;

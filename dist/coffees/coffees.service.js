@@ -18,13 +18,15 @@ const typeorm_1 = require("@nestjs/typeorm");
 const pagination_query_dto_1 = require("../common/dto/pagination-query.dto");
 const event_entity_1 = require("../events/entities/event.entity");
 const typeorm_2 = require("typeorm");
+const coffees_constants_1 = require("./coffees.constants");
 const coffee_entity_1 = require("./entities/coffee.entity");
 const flavor_entity_1 = require("./entities/flavor.entity");
 let CoffeesService = class CoffeesService {
-    constructor(coffeeRepository, flavorRepository, connection) {
+    constructor(coffeeRepository, flavorRepository, connection, coffeeBrands) {
         this.coffeeRepository = coffeeRepository;
         this.flavorRepository = flavorRepository;
         this.connection = connection;
+        console.log('coffeesService instantiated');
     }
     findAll(paginationQuery) {
         const { limit, offset } = paginationQuery;
@@ -92,9 +94,10 @@ CoffeesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(coffee_entity_1.Coffee)),
     __param(1, (0, typeorm_1.InjectRepository)(flavor_entity_1.Flavor)),
+    __param(3, (0, common_1.Inject)(coffees_constants_1.COFFEE_BRANDS)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Connection])
+        typeorm_2.Connection, Array])
 ], CoffeesService);
 exports.CoffeesService = CoffeesService;
 //# sourceMappingURL=coffees.service.js.map
